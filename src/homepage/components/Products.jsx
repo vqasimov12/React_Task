@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import SearchBar from "./SearchBar";
+import { useStore } from "zustand";
+import { themeStore } from "../../common/Store";
 const Products = () => {
+  const {theme,toggle}=useStore(themeStore)
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [pageSize, setPageSize] = useState(10);
@@ -23,7 +26,7 @@ const Products = () => {
   }, [searchTerm, pageSize]);
 
   return (
-    <>
+    <div>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <div className='grid grid-cols-3 gap-10 p-10'>
                 {products?.map(product => <ProductCard product={product} />)}
@@ -31,7 +34,7 @@ const Products = () => {
                     setPageSize(prevState => prevState + 5)
                 }} className='text-white bg-red-500 px-5 py-3 w-fit col-span-3 justify-self-center'>View more</button>
             </div>
-    </>
+    </div>
   );
 };
 
